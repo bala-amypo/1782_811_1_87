@@ -13,5 +13,16 @@ public class ActivityCategory(){
 
 }
 
-public A
+public ActivityCategory(){
+
+}
+
+public ActivityCategory(long id,String categoryName,String description, LocalDateTime createdAt){
+    this.categoryName=categoryName;
+    this.description=description;
+    this.createdAt=createdAt;
+}
+
+
+
 
