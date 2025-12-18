@@ -1,49 +1,32 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.User;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.entity.StudentEntity;
-import com.example.demo.service.StudentService;
-
-
 @RestController
-public class StudentController {
+@RequestMapping("/api/users")
+@Tag(name = "User", description = "Endpoints for user management")
+public class UserController {
 
-    @Autowired
-    StudentService ser;
-
-    @PostMapping("/addStudents")
-    public StudentEntity addStudents(@RequestBody StudentEntity student){
-        return ser.addStudents(student);
-    }
-    
-    @GetMapping("/getStudents")
-    public List<StudentEntity> getStudents() {
-        return ser.getStudents();
-    }
-    
-    @GetMapping("/getStudent/{id}")
-    public StudentEntity getStudentById(@PathVariable Long id) {
-        return ser.getStudentById(id);
+    @PostMapping("/register")
+    @Operation(summary = "Register a new user")
+    public User registerUser(@RequestBody User user) {
+        return user;
     }
 
-    @DeleteMapping("/deleteStudent/{id}")
-    public String deleteStudentById(@PathVariable Long id) {
-        StudentEntity student = ser.getStudentById(id);
-        if(student!=null) {
-            ser.deleteStudentById(id);
-            return "Student deleted successfully.";
-        } else {
-            return "Student not found.";
-        }
+    @GetMapping("/all")
+    @Operation(summary = "List all users")
+    public List<User> getAllUsers() {
+        return List.of();
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Get user by ID")
+    public User getUserById(@PathVariable Long id) {
+        return new User();
+    }
 }
