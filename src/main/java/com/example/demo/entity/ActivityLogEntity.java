@@ -14,25 +14,19 @@ public class ActivityLogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
-
     @ManyToOne
     @JoinColumn(name = "activity_type_id", nullable = false)
     private ActivityTypeEntity activityType;
-
     private String description;
-
     private LocalDateTime createdAt;
 
-    // Default constructor
     public ActivityLogEntity() {
         this.createdAt = LocalDateTime.now();
     }
-
-    // Parameterized constructor
+r
     public ActivityLogEntity(UserEntity user, ActivityTypeEntity activityType, String description) {
         this.user = user;
         this.activityType = activityType;
@@ -40,7 +34,6 @@ public class ActivityLogEntity {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public long getId() {
         return id;
     }

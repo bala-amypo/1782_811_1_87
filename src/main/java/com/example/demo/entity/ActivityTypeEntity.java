@@ -13,27 +13,19 @@ public class ActivityTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @Column(unique = true, nullable = false)
     private String typeName;
-
     private String description;
-
     private LocalDateTime createdAt;
-
-    // Default constructor
     public ActivityTypeEntity() {
         this.createdAt = LocalDateTime.now();
     }
-
-    // Parameterized constructor
     public ActivityTypeEntity(String typeName, String description) {
         this.typeName = typeName;
         this.description = description;
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public long getId() {
         return id;
     }
