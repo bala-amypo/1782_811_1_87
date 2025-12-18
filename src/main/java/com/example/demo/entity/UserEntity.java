@@ -14,17 +14,9 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
-    @Column(nullable = false)
     private String fullName;
-
-    @Column(nullable = false, unique = true) 
     private String email;
-
-    @Column(nullable = false)
-    private String role;
-
-    @Column(nullable = false, updatable = false) 
+    private String role; 
     private LocalDateTime createdAt;
 
     public UserEntity() {
