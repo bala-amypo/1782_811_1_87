@@ -1,4 +1,3 @@
-
 package com.example.demo.entity;
 
 import jakarta.persistence.Entity;
@@ -14,23 +13,25 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String fullName;
+
+    @Column(unique = true, nullable = false)
     private String email;
-    private String role; 
+
+    private String role;  
+
     private LocalDateTime createdAt;
 
     public UserEntity() {
-      
         this.createdAt = LocalDateTime.now();
     }
-
     public UserEntity(String fullName, String email, String role) {
         this.fullName = fullName;
         this.email = email;
         this.role = role;
-        this.createdAt = LocalDateTime.now(); 
-
-    
+        this.createdAt = LocalDateTime.now();
+    }
     public long getId() {
         return id;
     }
@@ -66,6 +67,4 @@ public class UserEntity {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-
-    
 }
