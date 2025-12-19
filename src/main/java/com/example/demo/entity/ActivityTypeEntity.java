@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "activity_types")
@@ -11,27 +12,25 @@ public class ActivityTypeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String typeName;
 
     @ManyToOne
-    private ActivityCategory category;
+    private ActivityCategoryEntity category;
 
     private String unit;
 
     private LocalDateTime createdAt;
 
-    // ✅ NO-ARG CONSTRUCTOR (name MUST match class)
-    public ActivityTypeEntity() {
-    }
+    @OneToMany(mappedBy = "activityType")
+    private List<ActivityLogEntity> activityLogs;
 
-    // ✅ PARAMETERIZED CONSTRUCTOR (name MUST match class)
-    public ActivityTypeEntity(
-            Long id,
-            String typeName,
-            ActivityCategory category,
-            String unit,
-            LocalDateTime createdAt
-    ) {
+    @OneToMany(mappedBy = "activityType")
+    private List<EmissionFactorEntity> emissionFactors;
+
+    public ActivityTypeEntity() {}
+
+    public ActivityTypeEntity(Long id, String typeName, ActivityCategoryEntity category, String unit, LocalDateTime createdAt) {
         this.id = id;
         this.typeName = typeName;
         this.category = category;
@@ -44,41 +43,18 @@ public class ActivityTypeEntity {
         this.createdAt = LocalDateTime.now();
     }
 
-    // ===== Getters & Setters =====
+    // Getters & Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getTypeName() { return typeName; }
+    public void setTypeName(String typeName) { this.typeName = typeName; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public ActivityCategoryEntity getCategory() { return category; }
+    public void setCategory(ActivityCategoryEntity category) { this.category = category; }
 
-    public String getTypeName() {
-        return typeName;
-    }
+    public String getUnit() { return unit; }
+    public void setUnit(String unit) { this.unit = unit; }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public ActivityCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(ActivityCategory category) {
-        this.category = category;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

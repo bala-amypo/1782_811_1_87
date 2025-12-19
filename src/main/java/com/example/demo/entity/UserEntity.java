@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,6 +23,9 @@ public class UserEntity {
 
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "user")
+    private List<ActivityLogEntity> activityLogs;
+
     public UserEntity() {}
 
     public UserEntity(Long id, String fullName, String email, String password, String role, LocalDateTime createdAt) {
@@ -36,9 +40,10 @@ public class UserEntity {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+        if (this.role == null) this.role = "USER";
     }
 
-    // getters & setters
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

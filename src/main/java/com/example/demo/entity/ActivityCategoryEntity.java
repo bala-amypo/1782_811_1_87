@@ -2,10 +2,11 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "activity_categories")
-public class ActivityCategory {
+public class ActivityCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +19,12 @@ public class ActivityCategory {
 
     private LocalDateTime createdAt;
 
-    public ActivityCategory() {}
+    @OneToMany(mappedBy = "category")
+    private List<ActivityTypeEntity> activityTypes;
 
-    public ActivityCategory(Long id, String categoryName, String description, LocalDateTime createdAt) {
+    public ActivityCategoryEntity() {}
+
+    public ActivityCategoryEntity(Long id, String categoryName, String description, LocalDateTime createdAt) {
         this.id = id;
         this.categoryName = categoryName;
         this.description = description;
@@ -32,6 +36,7 @@ public class ActivityCategory {
         this.createdAt = LocalDateTime.now();
     }
 
+    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
