@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
         @UniqueConstraint(columnNames = "categoryName")
     }
 )
-public class ActivityCategory {
+public class ActivityCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
