@@ -1,14 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserEntity;
 import com.example.demo.service.UserService;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@Tag(name = "User Controller", description = "User management APIs")
 public class UserController {
 
     private final UserService userService;
@@ -17,24 +18,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Register endpoint (optional, can also be in AuthController)
+    // POST /api/users/register
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User savedUser = userService.registerUser(user);
-        return ResponseEntity.ok(savedUser);
+    public UserEntity registerUser(@RequestBody UserEntity user) {
+        return userService.registerUser(user);
     }
 
-    // Get user by ID
+    // GET /api/users/all
+    @GetMapping("/all")
+    public List<UserEntity> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    // GET /api/users/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        User user = userService.getUser(id);
-        return ResponseEntity.ok(user);
-    }
-
-    // Get all users
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+    public UserEntity getUserById(@PathVariable Long id) {
+        return userService.getUser(id);
     }
 }
