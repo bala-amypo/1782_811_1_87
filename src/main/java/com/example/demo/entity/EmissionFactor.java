@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "emission_factors")
-public class EmissionFactorEntity {
+public class EmissionFactor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +19,9 @@ public class EmissionFactorEntity {
     private String unit;
 
     // Constructors
-    public EmissionFactorEntity() {}
+    public EmissionFactor() {}
 
-    public EmissionFactorEntity(Long activityTypeId, String factorName, Double factorValue, String unit) {
+    public EmissionFactor(Long activityTypeId, String factorName, Double factorValue, String unit) {
         this.activityTypeId = activityTypeId;
         this.factorName = factorName;
         this.factorValue = factorValue;
