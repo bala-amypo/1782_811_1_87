@@ -1,50 +1,62 @@
-// package com.example.demo.entity;
+package com.example.demo.entity;
 
-// import jakarta.persistence.*;
-// import java.time.LocalDateTime;
-// import java.util.List;
+import java.time.LocalDateTime;
 
-// @Entity
-// @Table(name = "activity_categories")
-// public class ActivityCategoryEntity {
+import jakarta.persistence.*;
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+@Entity
+@Table(
+    name = "activity_category",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "category_name")
+    }
+)
+public class ActivityCategoryEntity {
 
-//     @Column(unique = true)
-//     private String categoryName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     private String description;
+    @Column(name = "category_name", nullable = false, unique = true)
+    private String categoryName;
 
-//     private LocalDateTime createdAt;
+    private String description;
 
-//     @OneToMany(mappedBy = "category")
-//     private List<ActivityTypeEntity> activityTypes;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-//     public ActivityCategoryEntity() {}
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
-//     public ActivityCategoryEntity(Long id, String categoryName, String description, LocalDateTime createdAt) {
-//         this.id = id;
-//         this.categoryName = categoryName;
-//         this.description = description;
-//         this.createdAt = createdAt;
-//     }
+    // getters & setters
 
-//     @PrePersist
-//     public void prePersist() {
-//         this.createdAt = LocalDateTime.now();
-//     }
+    public Long getId() {
+        return id;
+    }
 
-//     // Getters & Setters
-//     public Long getId() { return id; }
-//     public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-//     public String getCategoryName() { return categoryName; }
-//     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-//     public String getDescription() { return description; }
-//     public void setDescription(String description) { this.description = description; }
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-//     public LocalDateTime getCreatedAt() { return createdAt; }
-// }
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+}
