@@ -8,7 +8,7 @@ import com.example.demo.entity.ActivityCategoryEntity;
 import com.example.demo.service.ActivityCategoryService;
 
 @RestController
-@RequestMapping("/api/categories")
+
 public class ActivityCategoryController {
 
     private final ActivityCategoryService service;
@@ -18,7 +18,7 @@ public class ActivityCategoryController {
     }
 
     // POST /api/categories
-    @PostMapping
+    @PostMapping("/Post")
     public ActivityCategoryEntity createCategory(
             @RequestBody ActivityCategoryEntity category) {
         return service.createCategory(category);
@@ -31,7 +31,7 @@ public class ActivityCategoryController {
     }
 
     // GET /api/categories/{id}
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ActivityCategoryEntity getCategory(@PathVariable Long id) {
         return service.getCategory(id);
     }

@@ -18,7 +18,7 @@ public class ActivityTypeController {
     }
 
     // POST /api/types/category/{categoryId}
-    @PostMapping("/a/{categoryId}")
+    @PostMapping("/Postt")
     public ActivityTypeEntity createType(
             @PathVariable Long categoryId,
             @RequestBody ActivityTypeEntity type) {
@@ -26,14 +26,14 @@ public class ActivityTypeController {
     }
 
     // GET /api/types/category/{categoryId}
-    @GetMapping("/b/{categoryId}")
+    @GetMapping("/gett/{categoryId}")
     public List<ActivityTypeEntity> getTypesByCategory(
             @PathVariable Long categoryId) {
         return service.getTypesByCategory(categoryId);
     }
 
     // GET /api/types/{id}
-    @GetMapping("/c/{id}")
+    @GetMapping("/gety/{id}")
     public ActivityTypeEntity getType(@PathVariable Long id) {
         return service.getType(id);
     }
