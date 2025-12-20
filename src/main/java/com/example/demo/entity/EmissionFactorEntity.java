@@ -1,52 +1,67 @@
-// package com.example.demo.entity;
+package com.example.demo.entity;
 
-// import jakarta.persistence.*;
-// import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
-// @Entity
-// @Table(name = "emission_factors")
-// public class EmissionFactorEntity {
+@Entity
+@Table(name = "emission_factors")
+public class EmissionFactorEntity {
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @ManyToOne
-//     private ActivityTypeEntity activityType;
+    private Long activityTypeId;
 
-//     private Double factorValue;
+    private String factorName;
 
-//     private String unit;
+    private Double factorValue;
 
-//     private LocalDateTime createdAt;
+    private String unit;
 
-//     public EmissionFactorEntity() {}
+    // Constructors
+    public EmissionFactorEntity() {}
 
-//     public EmissionFactorEntity(Long id, ActivityTypeEntity activityType, Double factorValue, String unit, LocalDateTime createdAt) {
-//         this.id = id;
-//         this.activityType = activityType;
-//         this.factorValue = factorValue;
-//         this.unit = unit;
-//         this.createdAt = createdAt;
-//     }
+    public EmissionFactorEntity(Long activityTypeId, String factorName, Double factorValue, String unit) {
+        this.activityTypeId = activityTypeId;
+        this.factorName = factorName;
+        this.factorValue = factorValue;
+        this.unit = unit;
+    }
 
-//     @PrePersist
-//     public void prePersist() {
-//         this.createdAt = LocalDateTime.now();
-//     }
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
 
-//     // Getters & Setters
-//     public Long getId() { return id; }
-//     public void setId(Long id) { this.id = id; }
+    public Long getActivityTypeId() {
+        return activityTypeId;
+    }
 
-//     public ActivityTypeEntity getActivityType() { return activityType; }
-//     public void setActivityType(ActivityTypeEntity activityType) { this.activityType = activityType; }
+    public void setActivityTypeId(Long activityTypeId) {
+        this.activityTypeId = activityTypeId;
+    }
 
-//     public Double getFactorValue() { return factorValue; }
-//     public void setFactorValue(Double factorValue) { this.factorValue = factorValue; }
+    public String getFactorName() {
+        return factorName;
+    }
 
-//     public String getUnit() { return unit; }
-//     public void setUnit(String unit) { this.unit = unit; }
+    public void setFactorName(String factorName) {
+        this.factorName = factorName;
+    }
 
-//     public LocalDateTime getCreatedAt() { return createdAt; }
-// }
+    public Double getFactorValue() {
+        return factorValue;
+    }
+
+    public void setFactorValue(Double factorValue) {
+        this.factorValue = factorValue;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+}
