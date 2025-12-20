@@ -8,7 +8,7 @@ import com.example.demo.entity.ActivityTypeEntity;
 import com.example.demo.service.ActivityTypeService;
 
 @RestController
-@RequestMapping("/api/types")
+
 public class ActivityTypeController {
 
     private final ActivityTypeService service;
