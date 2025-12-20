@@ -31,7 +31,7 @@ public class UserController {
     }
 
     // GET /api/users/{id}
-    @GetMapping("/{id}")
+    @GetMapping("/getts{id}")
     public UserEntity getUserById(@PathVariable Long id) {
         return userService.getUser(id);
     }
