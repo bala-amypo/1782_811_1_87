@@ -2,15 +2,15 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.EmissionFactorEntity;
+import com.example.demo.entity.EmissionFactor;
 
 public interface EmissionFactorService {
 
-    EmissionFactorEntity createFactor(Long activityTypeId, EmissionFactorEntity factor);
+    EmissionFactor createFactor(Long activityTypeId, EmissionFactor factor);
 
-    EmissionFactorEntity getFactorById(Long id);
+    EmissionFactor getFactorById(Long id);
 
-    List<EmissionFactorEntity> getFactorsByActivityType(Long activityTypeId);
+    List<EmissionFactor> getFactorsByActivityType(Long activityTypeId);
 
-    List<EmissionFactorEntity> getAllFactors();
+    List<EmissionFactor> getAllFactors();
 }

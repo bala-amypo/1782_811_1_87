@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.EmissionFactorEntity;
+import com.example.demo.entity.EmissionFactor;
 
-public interface EmissionFactorRepository extends JpaRepository<EmissionFactorEntity, Long> {
+public interface EmissionFactorRepository extends JpaRepository<EmissionFactor, Long> {
 
-    List<EmissionFactorEntity> findByActivityTypeId(Long activityTypeId);
+    List<EmissionFactor> findByActivityTypeId(Long activityTypeId);
 }

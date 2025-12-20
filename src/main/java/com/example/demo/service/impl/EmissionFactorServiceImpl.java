@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.EmissionFactorEntity;
+import com.example.demo.entity.EmissionFactor;
 import com.example.demo.repository.EmissionFactorRepository;
 import com.example.demo.service.EmissionFactorService;
 
@@ -16,23 +16,23 @@ public class EmissionFactorServiceImpl implements EmissionFactorService {
     private EmissionFactorRepository repository;
 
     @Override
-    public EmissionFactorEntity createFactor(Long activityTypeId, EmissionFactorEntity factor) {
+    public EmissionFactor createFactor(Long activityTypeId, EmissionFactor factor) {
         factor.setActivityTypeId(activityTypeId);
         return repository.save(factor);
     }
 
     @Override
-    public EmissionFactorEntity getFactorById(Long id) {
+    public EmissionFactor getFactorById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public List<EmissionFactorEntity> getFactorsByActivityType(Long activityTypeId) {
+    public List<EmissionFactor> getFactorsByActivityType(Long activityTypeId) {
         return repository.findByActivityTypeId(activityTypeId);
     }
 
     @Override
-    public List<EmissionFactorEntity> getAllFactors() {
+    public List<EmissionFactor> getAllFactors() {
         return repository.findAll();
     }
 }
