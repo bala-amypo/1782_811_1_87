@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.entity.ActivityCategoryEntity;
+import com.example.demo.entity.ActivityCategory;
 import com.example.demo.service.ActivityCategoryService;
 
 @RestController
-
+@RequestMapping("/api/categories")
 public class ActivityCategoryController {
 
     private final ActivityCategoryService service;
@@ -18,21 +18,20 @@ public class ActivityCategoryController {
     }
 
     // POST /api/categories
-    @PostMapping("/Post")
-    public ActivityCategoryEntity createCategory(
-            @RequestBody ActivityCategoryEntity category) {
+    @PostMapping
+    public ActivityCategory createCategory(@RequestBody ActivityCategory category) {
         return service.createCategory(category);
     }
 
     // GET /api/categories
     @GetMapping
-    public List<ActivityCategoryEntity> getAllCategories() {
+    public List<ActivityCategory> getAllCategories() {
         return service.getAllCategories();
     }
 
     // GET /api/categories/{id}
-    @GetMapping("/get/{id}")
-    public ActivityCategoryEntity getCategory(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ActivityCategory getCategory(@PathVariable Long id) {
         return service.getCategory(id);
     }
 }

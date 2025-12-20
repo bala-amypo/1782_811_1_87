@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.ActivityCategoryEntity;
+import com.example.demo.entity.ActivityCategory;
 import com.example.demo.repository.ActivityCategoryRepository;
 import com.example.demo.service.ActivityCategoryService;
 
@@ -18,7 +18,7 @@ public class ActivityCategoryServiceImpl implements ActivityCategoryService {
     }
 
     @Override
-    public ActivityCategoryEntity createCategory(ActivityCategoryEntity category) {
+    public ActivityCategory createCategory(ActivityCategory category) {
 
         repository.findByCategoryName(category.getCategoryName())
                 .ifPresent(c -> {
@@ -29,13 +29,13 @@ public class ActivityCategoryServiceImpl implements ActivityCategoryService {
     }
 
     @Override
-    public ActivityCategoryEntity getCategory(Long id) {
+    public ActivityCategory getCategory(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
     }
 
     @Override
-    public List<ActivityCategoryEntity> getAllCategories() {
+    public List<ActivityCategory> getAllCategories() {
         return repository.findAll();
     }
 }

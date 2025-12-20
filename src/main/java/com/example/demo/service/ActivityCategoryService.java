@@ -2,13 +2,13 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.ActivityCategoryEntity;
+import com.example.demo.entity.ActivityCategory;
 
 public interface ActivityCategoryService {
 
-    ActivityCategoryEntity createCategory(ActivityCategoryEntity category);
+    ActivityCategory createCategory(ActivityCategory category);
 
-    ActivityCategoryEntity getCategory(Long id);
+    ActivityCategory getCategory(Long id);
 
-    List<ActivityCategoryEntity> getAllCategories();
+    List<ActivityCategory> getAllCategories();
 }

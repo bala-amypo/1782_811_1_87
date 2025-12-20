@@ -4,10 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.ActivityCategoryEntity;
+import com.example.demo.entity.ActivityCategory;
 
-public interface ActivityCategoryRepository
-        extends JpaRepository<ActivityCategoryEntity, Long> {
+public interface ActivityCategoryRepository extends JpaRepository<ActivityCategory, Long> {
 
-    Optional<ActivityCategoryEntity> findByCategoryName(String categoryName);
+    Optional<ActivityCategory> findByCategoryName(String categoryName);
 }
