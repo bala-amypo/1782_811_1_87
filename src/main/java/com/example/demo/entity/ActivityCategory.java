@@ -11,7 +11,7 @@ import jakarta.persistence.*;
         @UniqueConstraint(columnNames = "category_name")
     }
 )
-public class ActivityCategoryEntity {
+public class ActivityCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class ActivityCategoryEntity {
         this.createdAt = LocalDateTime.now();
     }
 
-    // getters & setters
+    // Getters & Setters
 
     public Long getId() {
         return id;

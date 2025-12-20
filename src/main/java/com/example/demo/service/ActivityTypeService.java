@@ -2,13 +2,13 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.ActivityTypeEntity;
+import com.example.demo.entity.ActivityType;
 
 public interface ActivityTypeService {
 
-    ActivityTypeEntity createType(Long categoryId, ActivityTypeEntity type);
+    ActivityType createType(Long categoryId, ActivityType type);
 
-    ActivityTypeEntity getType(Long id);
+    ActivityType getType(Long id);
 
-    List<ActivityTypeEntity> getTypesByCategory(Long categoryId);
+    List<ActivityType> getTypesByCategory(Long categoryId);
 }

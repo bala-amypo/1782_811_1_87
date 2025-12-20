@@ -1,72 +1,45 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.repository.*;
-import com.example.demo.service.ActivityLogService;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.example.demo.entity.ActivityLog;
+import com.example.demo.repository.ActivityLogRepository;
+import com.example.demo.service.ActivityLogService;
 
 @Service
 public class ActivityLogServiceImpl implements ActivityLogService {
 
-    private final ActivityLogRepository logRepository;
-    private final UserRepository userRepository;
-    private final ActivityTypeRepository typeRepository;
-    private final EmissionFactorRepository factorRepository;
+    private final ActivityLogRepository repository;
 
-    public ActivityLogServiceImpl(
-            ActivityLogRepository logRepository,
-            UserRepository userRepository,
-            ActivityTypeRepository typeRepository,
-            EmissionFactorRepository factorRepository) {
-        this.logRepository = logRepository;
-        this.userRepository = userRepository;
-        this.typeRepository = typeRepository;
-        this.factorRepository = factorRepository;
+    public ActivityLogServiceImpl(ActivityLogRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public ActivityLog logActivity(Long userId, Long typeId, ActivityLog log) {
-
-        if (log.getQuantity() <= 0) {
-            throw new IllegalArgumentException("Quantity must be greater than zero");
-        }
-
-        if (log.getActivityDate().isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("Activity date cannot be in the future");
-        }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        ActivityType type = typeRepository.findById(typeId)
-                .orElseThrow(() -> new RuntimeException("Activity type not found"));
-
-        EmissionFactor factor = factorRepository.findByActivityType(type)
-                .orElseThrow(() -> new RuntimeException("Emission factor not found"));
-
-        log.setUser(user);
-        log.setActivityType(type);
-        log.setEstimatedEmission(log.getQuantity() * factor.getFactorValue());
-
-        return logRepository.save(log);
-    }
-
-    @Override
-    public List<ActivityLog> getLogsByUser(Long userId) {
-        return logRepository.findByUserId(userId);
-    }
-
-    @Override
-    public List<ActivityLog> getLogsByUserAndDate(Long userId, LocalDate start, LocalDate end) {
-        return logRepository.findByUserIdAndActivityDateBetween(userId, start, end);
+    public ActivityLog createLog(ActivityLog log) {
+        return repository.save(log);
     }
 
     @Override
     public ActivityLog getLog(Long id) {
-        return logRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Activity log not found"));
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ActivityLog not found with id: " + id));
+    }
+
+    @Override
+    public List<ActivityLog> getLogsByUser(Long userId) {
+        return repository.findByUserId(userId);
+    }
+
+    @Override
+    public List<ActivityLog> getLogsByActivityType(Long activityTypeId) {
+        return repository.findByActivityTypeId(activityTypeId);
+    }
+
+    @Override
+    public List<ActivityLog> getAllLogs() {
+        return repository.findAll();
     }
 }

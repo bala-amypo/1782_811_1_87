@@ -1,45 +1,49 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ActivityLog;
-import com.example.demo.service.ActivityLogService;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.example.demo.entity.ActivityLog;
+import com.example.demo.service.ActivityLogService;
 
 @RestController
 @RequestMapping("/api/logs")
 public class ActivityLogController {
 
-    private final ActivityLogService logService;
+    private final ActivityLogService service;
 
-    public ActivityLogController(ActivityLogService logService) {
-        this.logService = logService;
+    public ActivityLogController(ActivityLogService service) {
+        this.service = service;
     }
 
-    @PostMapping("/{userId}/{typeId}")
-    public ActivityLog logActivity(
-            @PathVariable Long userId,
-            @PathVariable Long typeId,
-            @RequestBody ActivityLog log) {
-        return logService.logActivity(userId, typeId, log);
+    // POST /api/logs
+    @PostMapping
+    public ActivityLog createLog(@RequestBody ActivityLog log) {
+        return service.createLog(log);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<ActivityLog> getLogsByUser(@PathVariable Long userId) {
-        return logService.getLogsByUser(userId);
-    }
-
-    @GetMapping("/user/{userId}/range")
-    public List<ActivityLog> getLogsByDateRange(
-            @PathVariable Long userId,
-            @RequestParam LocalDate start,
-            @RequestParam LocalDate end) {
-        return logService.getLogsByUserAndDate(userId, start, end);
-    }
-
+    // GET /api/logs/{id}
     @GetMapping("/{id}")
     public ActivityLog getLog(@PathVariable Long id) {
-        return logService.getLog(id);
+        return service.getLog(id);
+    }
+
+    // GET /api/logs/user/{userId}
+    @GetMapping("/user/{userId}")
+    public List<ActivityLog> getLogsByUser(@PathVariable Long userId) {
+        return service.getLogsByUser(userId);
+    }
+
+    // GET /api/logs/activity/{activityTypeId}
+    @GetMapping("/activity/{activityTypeId}")
+    public List<ActivityLog> getLogsByActivityType(@PathVariable Long activityTypeId) {
+        return service.getLogsByActivityType(activityTypeId);
+    }
+
+    // GET /api/logs
+    @GetMapping
+    public List<ActivityLog> getAllLogs() {
+        return service.getAllLogs();
     }
 }
