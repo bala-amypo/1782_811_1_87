@@ -5,13 +5,12 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.entity.ActivityCategoryEntity;
-import com.example.demo.entity.ActivityTypeEntity;
+import com.example.demo.entity.ActivityCategory;
+import com.example.demo.entity.ActivityType;
 
-public interface ActivityTypeRepository
-        extends JpaRepository<ActivityTypeEntity, Long> {
+public interface ActivityTypeRepository extends JpaRepository<ActivityType, Long> {
 
-    Optional<ActivityTypeEntity> findByTypeName(String typeName);
+    Optional<ActivityType> findByTypeName(String typeName);
 
-    List<ActivityTypeEntity> findByCategory(ActivityCategoryEntity category);
+    List<ActivityType> findByCategory(ActivityCategory category);
 }

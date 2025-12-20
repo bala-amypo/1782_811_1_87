@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.ActivityCategoryEntity;
-import com.example.demo.entity.ActivityTypeEntity;
+import com.example.demo.entity.ActivityCategory;
+import com.example.demo.entity.ActivityType;
 import com.example.demo.repository.ActivityCategoryRepository;
 import com.example.demo.repository.ActivityTypeRepository;
 import com.example.demo.service.ActivityTypeService;
@@ -24,7 +24,7 @@ public class ActivityTypeServiceImpl implements ActivityTypeService {
     }
 
     @Override
-    public ActivityTypeEntity createType(Long categoryId, ActivityTypeEntity type) {
+    public ActivityType createType(Long categoryId, ActivityType type) {
 
         if (type.getUnit() == null || type.getUnit().isBlank()) {
             throw new RuntimeException("Unit must be provided");
@@ -35,7 +35,7 @@ public class ActivityTypeServiceImpl implements ActivityTypeService {
                     throw new RuntimeException("Type name must be unique");
                 });
 
-        ActivityCategoryEntity category = categoryRepository.findById(categoryId)
+        ActivityCategory category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new RuntimeException("Category not found with id: " + categoryId));
 
@@ -44,16 +44,16 @@ public class ActivityTypeServiceImpl implements ActivityTypeService {
     }
 
     @Override
-    public ActivityTypeEntity getType(Long id) {
+    public ActivityType getType(Long id) {
         return typeRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Type not found with id: " + id));
     }
 
     @Override
-    public List<ActivityTypeEntity> getTypesByCategory(Long categoryId) {
+    public List<ActivityType> getTypesByCategory(Long categoryId) {
 
-        ActivityCategoryEntity category = categoryRepository.findById(categoryId)
+        ActivityCategory category = categoryRepository.findById(categoryId)
                 .orElseThrow(() ->
                         new RuntimeException("Category not found with id: " + categoryId));
 

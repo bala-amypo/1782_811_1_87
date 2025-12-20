@@ -11,7 +11,7 @@ import jakarta.persistence.*;
         @UniqueConstraint(columnNames = "type_name")
     }
 )
-public class ActivityTypeEntity {
+public class ActivityType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class ActivityTypeEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id")
-    private ActivityCategoryEntity category;
+    private ActivityCategory category;
 
     @Column(nullable = false)
     private String unit;
@@ -49,11 +49,11 @@ public class ActivityTypeEntity {
         this.typeName = typeName;
     }
 
-    public ActivityCategoryEntity getCategory() {
+    public ActivityCategory getCategory() {
         return category;
     }
 
-    public void setCategory(ActivityCategoryEntity category) {
+    public void setCategory(ActivityCategory category) {
         this.category = category;
     }
 
