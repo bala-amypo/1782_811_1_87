@@ -33,7 +33,7 @@ public class ActivityTypeController {
     }
 
     // GET /api/types/{id}
-    @GetMapping("/{id}")
+    @GetMapping("/c/{id}")
     public ActivityTypeEntity getType(@PathVariable Long id) {
         return service.getType(id);
     }
