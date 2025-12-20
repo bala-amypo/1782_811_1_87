@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity registerUser(UserEntity user) {
+    public User registerUser(User user) {
 
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
@@ -28,19 +28,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getUser(Long id) {
+    public User getUser(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
     }
 
     @Override
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public UserEntity getByEmail(String email) {
+    public User getByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with email: " + email));

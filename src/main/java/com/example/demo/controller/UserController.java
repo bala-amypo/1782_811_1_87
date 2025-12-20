@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -20,19 +20,19 @@ public class UserController {
 
     // POST /api/users/register
     @PostMapping("/register")
-    public UserEntity registerUser(@RequestBody UserEntity user) {
+    public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
     }
 
     // GET /api/users/all
     @GetMapping("/all")
-    public List<UserEntity> getAllUsers() {
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
     // GET /api/users/{id}
     @GetMapping("/getts{id}")
-    public UserEntity getUserById(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.getUser(id);
     }
 }
