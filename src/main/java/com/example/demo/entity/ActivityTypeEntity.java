@@ -1,60 +1,71 @@
-// package com.example.demo.entity;
+package com.example.demo.entity;
 
-// import jakarta.persistence.*;
-// import java.time.LocalDateTime;
-// import java.util.List;
+import java.time.LocalDateTime;
 
-// @Entity
-// @Table(name = "activity_types")
-// public class ActivityTypeEntity {
+import jakarta.persistence.*;
 
-//     @Id
-//     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//     private Long id;
+@Entity
+@Table(
+    name = "activity_type",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "type_name")
+    }
+)
+public class ActivityTypeEntity {
 
-//     @Column(unique = true)
-//     private String typeName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-//     @ManyToOne
-//     private ActivityCategoryEntity category;
+    @Column(name = "type_name", nullable = false, unique = true)
+    private String typeName;
 
-//     private String unit;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id")
+    private ActivityCategoryEntity category;
 
-//     private LocalDateTime createdAt;
+    @Column(nullable = false)
+    private String unit;
 
-//     @OneToMany(mappedBy = "activityType")
-//     private List<ActivityLogEntity> activityLogs;
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
-//     @OneToMany(mappedBy = "activityType")
-//     private List<EmissionFactorEntity> emissionFactors;
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
-//     public ActivityTypeEntity() {}
+    // getters and setters
 
-//     public ActivityTypeEntity(Long id, String typeName, ActivityCategoryEntity category, String unit, LocalDateTime createdAt) {
-//         this.id = id;
-//         this.typeName = typeName;
-//         this.category = category;
-//         this.unit = unit;
-//         this.createdAt = createdAt;
-//     }
+    public Long getId() {
+        return id;
+    }
 
-//     @PrePersist
-//     public void prePersist() {
-//         this.createdAt = LocalDateTime.now();
-//     }
+    public String getTypeName() {
+        return typeName;
+    }
 
-//     // Getters & Setters
-//     public Long getId() { return id; }
-//     public void setId(Long id) { this.id = id; }
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 
-//     public String getTypeName() { return typeName; }
-//     public void setTypeName(String typeName) { this.typeName = typeName; }
+    public ActivityCategoryEntity getCategory() {
+        return category;
+    }
 
-//     public ActivityCategoryEntity getCategory() { return category; }
-//     public void setCategory(ActivityCategoryEntity category) { this.category = category; }
+    public void setCategory(ActivityCategoryEntity category) {
+        this.category = category;
+    }
 
-//     public String getUnit() { return unit; }
-//     public void setUnit(String unit) { this.unit = unit; }
+    public String getUnit() {
+        return unit;
+    }
 
-//     public LocalDateTime getCreatedAt() { return createdAt; }
-// }
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+}
