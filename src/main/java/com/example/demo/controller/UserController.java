@@ -17,20 +17,15 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-    // POST /api/users/register
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) {
         return userService.registerUser(user);
     }
-
-    // GET /api/users/all
     @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // GET /api/users/{id}
     @GetMapping("/getts{id}")
     public User getUserById(@PathVariable Long id) {
         return userService.getUser(id);

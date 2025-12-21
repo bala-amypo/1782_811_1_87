@@ -17,8 +17,6 @@ public class EmissionFactor {
     private Double factorValue;
 
     private String unit;
-
-    // Constructors
     public EmissionFactor() {}
 
     public EmissionFactor(Long activityTypeId, String factorName, Double factorValue, String unit) {
@@ -28,7 +26,6 @@ public class EmissionFactor {
         this.unit = unit;
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }
