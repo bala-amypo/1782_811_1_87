@@ -11,6 +11,5 @@ import com.example.demo.entity.ActivityType;
 public interface ActivityTypeRepository extends JpaRepository<ActivityType, Long> {
 
     Optional<ActivityType> findByTypeName(String typeName);
-
     List<ActivityType> findByCategory(ActivityCategory category);
 }
