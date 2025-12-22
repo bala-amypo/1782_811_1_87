@@ -7,8 +7,6 @@ import com.example.demo.entity.ActivityCategory;
 public interface ActivityCategoryService {
 
     ActivityCategory createCategory(ActivityCategory category);
-
     ActivityCategory getCategory(Long id);
-
     List<ActivityCategory> getAllCategories();
 }
