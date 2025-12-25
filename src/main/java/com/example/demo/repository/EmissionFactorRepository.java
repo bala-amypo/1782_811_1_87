@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface EmissionFactorRepository extends JpaRepository<EmissionFactor, Long> {
     Optional<EmissionFactor> findByActivityType_Id(Long activityTypeId);
+    Optional<EmissionFactor> findByActivityTypeId(Long activityTypeId);
 }
