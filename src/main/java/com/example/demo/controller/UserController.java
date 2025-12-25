@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.User;
-import com.example.demo.service.interfaces.UserService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<User> loginUser(@RequestBody LoginRequest request) {
         return userService.loginUser(request)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.unauthorized().build());
+                .orElse(ResponseEntity.status(401).build());
     }
 
     @GetMapping("/{id}")

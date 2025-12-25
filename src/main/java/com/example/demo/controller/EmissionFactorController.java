@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.EmissionFactor;
-import com.example.demo.service.interfaces.EmissionFactorService;
+import com.example.demo.service.EmissionFactorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

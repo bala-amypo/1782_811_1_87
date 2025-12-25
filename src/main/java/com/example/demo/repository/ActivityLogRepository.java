@@ -14,6 +14,6 @@ public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long> 
     List<ActivityLog> findByUser_IdAndActivityDateBetween(Long userId, LocalDate startDate, LocalDate endDate);
     List<ActivityLog> findByUserIdAndActivityDateBetween(Long userId, LocalDate startDate, LocalDate endDate);
     
-    @Query("SELECT SUM(a.estimatedEmissions) FROM ActivityLog a WHERE a.user.id = :userId")
+    @Query("SELECT SUM(a.estimatedEmission) FROM ActivityLog a WHERE a.user.id = :userId")
     Double sumEstimatedEmissionsByUserId(Long userId);
 }
