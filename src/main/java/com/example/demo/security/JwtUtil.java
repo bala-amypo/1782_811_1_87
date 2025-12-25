@@ -22,9 +22,9 @@ public class JwtUtils {
     }
 
     public String generateJwtToken(Authentication authentication) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        String email = authentication.getName();
         return Jwts.builder()
-                .setSubject(userPrincipal.getEmail())
+                .setSubject(email)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + jwtExpirationMs))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS512)
