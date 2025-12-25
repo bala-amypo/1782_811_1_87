@@ -1,60 +1,45 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
-
 @Entity
-@Table(
-    name = "activity_category",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "category_name")
-    }
-)
+@Table(name = "activity_categories")
 public class ActivityCategory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "category_name", nullable = false, unique = true)
+    
+    @Column(name = "category_name", unique = true)
     private String categoryName;
-
+    
     private String description;
-
-    @Column(name = "created_at", updatable = false)
+    
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    public ActivityCategory() {}
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public ActivityCategory(Long id, String categoryName, String description, LocalDateTime createdAt) {
         this.id = id;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
+        }
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
