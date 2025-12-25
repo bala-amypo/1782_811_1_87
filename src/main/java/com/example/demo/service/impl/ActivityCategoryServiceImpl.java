@@ -4,7 +4,7 @@ import com.example.demo.entity.ActivityCategory;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.ActivityCategoryRepository;
-import com.example.demo.service.interfaces.ActivityCategoryService;
+import com.example.demo.service.ActivityCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
