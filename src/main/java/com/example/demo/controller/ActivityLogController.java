@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ActivityLogRequest;
 import com.example.demo.entity.ActivityLog;
-import com.example.demo.service.interfaces.ActivityLogService;
+import com.example.demo.service.ActivityLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

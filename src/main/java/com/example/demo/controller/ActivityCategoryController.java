@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ActivityCategory;
-import com.example.demo.service.interfaces.ActivityCategoryService;
+import com.example.demo.service.ActivityCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

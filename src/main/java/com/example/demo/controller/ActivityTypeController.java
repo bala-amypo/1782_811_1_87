@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ActivityType;
-import com.example.demo.service.interfaces.ActivityTypeService;
+import com.example.demo.service.ActivityTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
