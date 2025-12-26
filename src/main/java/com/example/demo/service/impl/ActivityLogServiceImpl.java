@@ -1,115 +1,69 @@
+// com/example/demo/service/impl/ActivityLogServiceImpl.java
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.ActivityLogRequest;
 import com.example.demo.entity.ActivityLog;
 import com.example.demo.entity.ActivityType;
 import com.example.demo.entity.EmissionFactor;
 import com.example.demo.entity.User;
-import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exception.ValidationException;
 import com.example.demo.repository.ActivityLogRepository;
+import com.example.demo.repository.ActivityTypeRepository;
+import com.example.demo.repository.EmissionFactorRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ActivityLogService;
-import com.example.demo.service.ActivityTypeService;
-import com.example.demo.service.EmissionFactorService;
-import com.example.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
-@Service
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 public class ActivityLogServiceImpl implements ActivityLogService {
 
-    @Autowired
-    private ActivityLogRepository activityLogRepository;
-    
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private ActivityTypeService activityTypeService;
-    
-    @Autowired
-    private EmissionFactorService emissionFactorService;
+    private final UserRepository userRepository;
+    private final ActivityTypeRepository typeRepository;
+    private final EmissionFactorRepository factorRepository;
+    private final ActivityLogRepository logRepository;
+
+    public ActivityLogServiceImpl(UserRepository userRepository,
+                                  ActivityTypeRepository typeRepository,
+                                  EmissionFactorRepository factorRepository,
+                                  ActivityLogRepository logRepository) {
+        this.userRepository = userRepository;
+        this.typeRepository = typeRepository;
+        this.factorRepository = factorRepository;
+        this.logRepository = logRepository;
+    }
 
     @Override
-    public ActivityLog save(ActivityLogRequest request) {
-        User user = userService.findById(request.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + request.getUserId()));
-        
-        ActivityType activityType = activityTypeService.findById(request.getActivityTypeId())
-                .orElseThrow(() -> new ResourceNotFoundException("Activity type not found with id: " + request.getActivityTypeId()));
-        
-        ActivityLog activityLog = new ActivityLog();
-        activityLog.setUser(user);
-        activityLog.setActivityType(activityType);
-        activityLog.setQuantity(request.getQuantity());
-        activityLog.setActivityDate(request.getActivityDate());
-        
-        // Calculate estimated emission
-        Optional<EmissionFactor> emissionFactor = emissionFactorService.findByActivityTypeId(request.getActivityTypeId());
-        if (emissionFactor.isPresent()) {
-            double emission = request.getQuantity() * emissionFactor.get().getFactorValue();
-            activityLog.setEstimatedEmission(emission);
+    public ActivityLog logActivity(Long userId, Long typeId, ActivityLog log) {
+        User user = userRepository.findById(userId).orElseThrow();
+        ActivityType type = typeRepository.findById(typeId).orElse(null);
+
+        if (log.getActivityDate() != null && log.getActivityDate().isAfter(LocalDate.now())) {
+            throw new ValidationException("Activity date cannot be in the future");
         }
-        
-        return activityLogRepository.save(activityLog);
-    }
 
-    @Override
-    public Optional<ActivityLog> findById(Long id) {
-        return activityLogRepository.findById(id);
-    }
+        EmissionFactor factor = factorRepository.findByActivityType_Id(typeId)
+                .orElseThrow(() -> new ValidationException("No emission factor configured"));
 
-    @Override
-    public List<ActivityLog> findAll() {
-        return activityLogRepository.findAll();
-    }
+        double estimated = (log.getQuantity() != null ? log.getQuantity() : 0.0) * factor.getFactorValue();
 
-    @Override
-    public List<ActivityLog> findByUserId(Long userId) {
-        return activityLogRepository.findByUserId(userId);
-    }
-
-    @Override
-    public List<ActivityLog> findByUserIdAndDateRange(Long userId, LocalDate startDate, LocalDate endDate) {
-        return activityLogRepository.findByUserIdAndActivityDateBetween(userId, startDate, endDate);
-    }
-
-    @Override
-    public ActivityLog update(Long id, ActivityLogRequest request) {
-        ActivityLog activityLog = activityLogRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Activity log not found with id: " + id));
-        
-        if (request.getQuantity() != null) {
-            activityLog.setQuantity(request.getQuantity());
+        log.setUser(user);
+        log.setActivityType(type);
+        log.setEstimatedEmission(estimated);
+        if (log.getLoggedAt() == null) {
+            log.setLoggedAt(LocalDateTime.now());
         }
-        if (request.getActivityDate() != null) {
-            activityLog.setActivityDate(request.getActivityDate());
-        }
-        
-        // Recalculate emission if quantity changed
-        if (request.getQuantity() != null) {
-            Optional<EmissionFactor> emissionFactor = emissionFactorService.findByActivityTypeId(activityLog.getActivityType().getId());
-            if (emissionFactor.isPresent()) {
-                double emission = activityLog.getQuantity() * emissionFactor.get().getFactorValue();
-                activityLog.setEstimatedEmission(emission);
-            }
-        }
-        
-        return activityLogRepository.save(activityLog);
+
+        return logRepository.save(log);
     }
 
     @Override
-    public void deleteById(Long id) {
-        if (!activityLogRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Activity log not found with id: " + id);
-        }
-        activityLogRepository.deleteById(id);
+    public List<ActivityLog> getLogsByUserAndDate(Long userId, LocalDate start, LocalDate end) {
+        return logRepository.findByUser_IdAndActivityDateBetween(userId, start, end);
     }
 
     @Override
-    public Double calculateTotalEmissionsByUser(Long userId) {
-        return activityLogRepository.sumEstimatedEmissionsByUserId(userId);
+    public List<ActivityLog> getLogsByUser(Long userId) {
+        return logRepository.findByUser_Id(userId);
     }
 }
