@@ -4,18 +4,18 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "activity_types")
-public class ActivityType {
+@Table(name = "emission_factors")
+public class EmissionFactor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "type_name", nullable = false)
-    private String typeName;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "activity_type_id")
+    private ActivityType activityType;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private ActivityCategory category;
+    @Column(name = "factor_value", nullable = false)
+    private Double factorValue;
     
     @Column(nullable = false)
     private String unit;
@@ -23,12 +23,12 @@ public class ActivityType {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public ActivityType() {}
+    public EmissionFactor() {}
 
-    public ActivityType(Long id, String typeName, ActivityCategory category, String unit, LocalDateTime createdAt) {
+    public EmissionFactor(Long id, ActivityType activityType, Double factorValue, String unit, LocalDateTime createdAt) {
         this.id = id;
-        this.typeName = typeName;
-        this.category = category;
+        this.activityType = activityType;
+        this.factorValue = factorValue;
         this.unit = unit;
         this.createdAt = createdAt;
     }
@@ -40,10 +40,10 @@ public class ActivityType {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getTypeName() { return typeName; }
-    public void setTypeName(String typeName) { this.typeName = typeName; }
-    public ActivityCategory getCategory() { return category; }
-    public void setCategory(ActivityCategory category) { this.category = category; }
+    public ActivityType getActivityType() { return activityType; }
+    public void setActivityType(ActivityType activityType) { this.activityType = activityType; }
+    public Double getFactorValue() { return factorValue; }
+    public void setFactorValue(Double factorValue) { this.factorValue = factorValue; }
     public String getUnit() { return unit; }
     public void setUnit(String unit) { this.unit = unit; }
     public LocalDateTime getCreatedAt() { return createdAt; }
