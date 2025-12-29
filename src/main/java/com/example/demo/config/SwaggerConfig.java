@@ -19,7 +19,7 @@ public class SwaggerConfig {
                 .servers(List.of(
                         new Server().url("https://9376.pro604cr.amypo.ai/")
                 ))
-                // 🔐 Global JWT security
+                
                 .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
                 .components(new Components()
                         .addSecuritySchemes("BearerAuth",
