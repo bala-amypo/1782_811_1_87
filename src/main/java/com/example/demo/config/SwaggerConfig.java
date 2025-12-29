@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(List.of(
-                        new Server().url("https://9417.pro604cr.amypo.ai/")
+                        new Server().url("https://9376.pro604cr.amypo.ai/")
                 ))
                 // 🔐 Global JWT security
                 .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
